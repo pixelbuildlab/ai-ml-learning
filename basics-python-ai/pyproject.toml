@@ -1,0 +1,30 @@
+[project]
+name = "new-project"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "pixelbuildlab", email = "2017n2801@gmail.com" }
+]
+requires-python = ">=3.11.15"
+dependencies = [
+    "groq>=1.6.0",
+    "ipykernel>=7.3.0",
+    "jupyterlab>=4.6.2",
+    "matplotlib>=3.11.1",
+    "mcp[cli]>=2.0.0",
+    "numpy>=2.4.6",
+    "ollmcp>=0.17.0",
+    "scipy>=1.17.1",
+    "sentence-transformers>=5.7.0",
+]
+
+[tool.uv]
+package = false
+
+[project.scripts]
+new-project = "new_project:main"
+
+[build-system]
+requires = ["uv_build>=0.12.0,<0.13.0"]
+build-backend = "uv_build"

@@ -1,0 +1,65 @@
+('Score: [0.07207398116588593]',
+ 'Accuracy: [0.9832000136375427]',
+ '<keras.src.optimizers.adamw.AdamW object at 0x357a1c830>',
+ {'name': 'activation_29',
+  'trainable': True,
+  'dtype': {'module': 'keras',
+   'class_name': 'DTypePolicy',
+   'config': {'name': 'float32'},
+   'registered_name': None},
+  'activation': 'sigmoid'})
+
+  ----
+  ('Score: [0.07078719139099121]',
+ 'Accuracy: [0.9851999878883362]',
+ '<keras.src.optimizers.adamw.AdamW object at 0x315bc3440>',
+ {'name': 'activation_26',
+  'trainable': True,
+  'dtype': {'module': 'keras',
+   'class_name': 'DTypePolicy',
+   'config': {'name': 'float32'},
+   'registered_name': None},
+  'activation': 'softmax'})
+  -----
+  
+
+  ----------
+  ('Score: [11.443855285644531]',
+ 'Accuracy: [0.23090000450611115]',
+ '<keras.src.optimizers.sgd.SGD object at 0x176009190>',
+ {'name': 'activation_32',
+  'trainable': True,
+  'dtype': {'module': 'keras',
+   'class_name': 'DTypePolicy',
+   'config': {'name': 'float32'},
+   'registered_name': None},
+  'activation': 'leaky_relu'})
+
+  --------
+
+
+  ('Score: [0.14499174058437347]',
+ 'Accuracy: [0.9569000005722046]',
+ '<keras.src.optimizers.sgd.SGD object at 0x37ee98710>',
+ {'name': 'activation_38',
+  'trainable': True,
+  'dtype': {'module': 'keras',
+   'class_name': 'DTypePolicy',
+   'config': {'name': 'float32'},
+   'registered_name': None},
+  'activation': 'softmax'})
+
+
+  ---
+
+
+  ('Score: [0.26532384753227234]',
+ 'Accuracy: [0.9258000254631042]',
+ '<keras.src.optimizers.adagrad.Adagrad object at 0x37ef19e50>',
+ {'name': 'activation_41',
+  'trainable': True,
+  'dtype': {'module': 'keras',
+   'class_name': 'DTypePolicy',
+   'config': {'name': 'float32'},
+   'registered_name': None},
+  'activation': 'softmax'})

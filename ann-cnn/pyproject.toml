@@ -1,0 +1,14 @@
+[project]
+name = "ml-lec-v10"
+version = "0.1.0"
+requires-python = ">=3.12.13"
+dependencies = [
+    "fastapi[standard]>=0.141.1",
+    "joblib>=1.5.3",
+    "jupyterlab>=4.6.2",
+    "keras==3.13.2",
+    "numpy>=2.5.1",
+    "onnx>=1.22.0",
+    "tensorflow==2.20.0",
+    "tf2onnx>=1.17.0",
+]

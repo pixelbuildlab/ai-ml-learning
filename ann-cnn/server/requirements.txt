@@ -1,0 +1,5 @@
+joblib
+fastapi[standard]
+numpy
+keras
+tensorflow

@@ -38,18 +38,21 @@ CREATE TABLE IF NOT EXISTS messages (
 CREATE TABLE IF NOT EXISTS memories (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
-
     key TEXT NOT NULL,
     value TEXT NOT NULL,
-
-    source TEXT DEFAULT 'user',
-    confidence REAL DEFAULT 1.0,
-    is_active INTEGER DEFAULT 1,
-
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    UNIQUE(user_id, key)
+);
+
+INSERT INTO users (name, timezone, created_at)
+SELECT 'Test User', 'Pakistan', current_timestamp
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM users
+    WHERE name = 'Test User'
 );
 
 SELECT "MIGRATION SUCCESSFUL";

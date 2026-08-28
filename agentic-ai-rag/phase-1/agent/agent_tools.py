@@ -26,6 +26,7 @@ def handle_tool_calls(func_name, args):
 
 
 # tools
+# placeholder for Calendar API or Calendly
 def user_calendar(day: str) -> dict[str, str | list]:
     calendars = {
         "monday": {

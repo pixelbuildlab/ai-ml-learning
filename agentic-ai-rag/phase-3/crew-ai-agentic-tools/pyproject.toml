@@ -1,0 +1,7 @@
+[project]
+name = "crew-ai-agentic-tools"
+version = "0.1.0"
+requires-python = ">=3.12.13"
+dependencies = [
+    "crewai>=1.15.18",
+]

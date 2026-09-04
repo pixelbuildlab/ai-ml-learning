@@ -1,0 +1,1 @@
+Moved file to /app/moved_folder/

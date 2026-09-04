@@ -1,0 +1,185 @@
+{
+  // Display name for this crew
+  "name": "dataset-builder",
+
+  // Agents to include — each must have a matching agents/<name>.jsonc file
+  "agents": ["toolcalling_dataset_scenario_", "natural_language_query_generat", "toolcall_dataset_validator"],
+
+  // Task definitions — executed in order for sequential process
+  "tasks": [
+    {
+      // Task identifier
+      "name": "read_the_provided_tool_task",
+
+      // What the task should accomplish
+      // Use {placeholder} inputs here; crewai run prompts for missing values
+
+      // Clear definition of what the output should look like
+
+      
+  "description": "Read the tool definitions from {tools_file}. Generate a large batch of diverse, realistic tool-call scenarios. For each scenario, select exactly one available tool and generate valid arguments according to its JSON schema. Include all required parameters, use correct data types, realistic values, and never invent unsupported parameters. Generate exactly 10 independent scenarios. Return the complete JSON array. Do not summarize or truncate the output across all available tools, with balanced distribution between tools. Return ONLY a JSON array. Do not generate natural-language user queries.",
+  "expected_output": "A JSON array containing at least 10 valid scenarios. Each item must contain exactly 'tool' and 'arguments'. The tool must exist in the provided definitions and the arguments must conform to its schema.",
+
+      // Optional task guardrail(s) validate output before completion
+      // Use "guardrail" for one rule or "guardrails" for many
+      // Failed guardrails retry up to guardrail_max_retries times
+      // "guardrail": "Every factual claim needs context support.",
+      // "guardrails": [
+      //   "Every factual claim must be supported by context.",
+      //   "The answer must match the expected output format."
+      // ],
+      // "guardrail_max_retries": 2,
+
+      // Advanced task options:
+      // Docs: https://docs.crewai.com/concepts/tasks
+      // "type": "ConditionalTask",
+      // "condition": { "python": "my_project.conditions.should_run" },
+      // "output_json": { "python": "my_project.models.ReportOutput" },
+      // "output_pydantic": null,
+      // "response_model": null,
+      // "converter_cls": { "python": "my_project.converters.CustomConverter" },
+      // "markdown": false,
+      // "input_files": { "brief": "data/brief.txt" },
+      // "security_config": {},
+
+      // Which agent handles this task
+      "agent": "toolcalling_dataset_scenario_"
+
+      // "tools": [],
+      // "human_input": false,
+      // "async_execution": false
+    }
+,
+    {
+      // Task identifier
+      "name": "read_the_tool_definitions_task",
+
+      // What the task should accomplish
+      // Use {placeholder} inputs here; crewai run prompts for missing values
+      "description": "Take the tool-call scenarios produced by the previous task and generate diverse natural-language user requests for each scenario. For every scenario, generate exactly 5 variations that express exactly the same intent and preserve the exact argument values. Include natural conversational variations such as formal wording, casual wording, abbreviations, different sentence structures, and different ways of expressing numbers. Do not change, add, or remove any arguments. Do not answer the user's request. Return structured JSON containing the user query, tool name, and exact arguments."
+      ,// Clear definition of what the output should look like
+      "expected_output": "A JSON array containing diverse user queries paired with their exact ground-truth tool name and arguments.",
+
+      "context": ["read_the_provided_tool_task"],
+      // Optional task guardrail(s) validate output before completion
+      // Use "guardrail" for one rule or "guardrails" for many
+      // Failed guardrails retry up to guardrail_max_retries times
+      // "guardrail": "Every factual claim needs context support.",
+      // "guardrails": [
+      //   "Every factual claim must be supported by context.",
+      //   "The answer must match the expected output format."
+      // ],
+      // "guardrail_max_retries": 2,
+
+      // Advanced task options:
+      // Docs: https://docs.crewai.com/concepts/tasks
+      // "type": "ConditionalTask",
+      // "condition": { "python": "my_project.conditions.should_run" },
+      // "output_json": { "python": "my_project.models.ReportOutput" },
+      // "output_pydantic": null,
+      // "response_model": null,
+      // "converter_cls": { "python": "my_project.converters.CustomConverter" },
+      // "markdown": false,
+      // "input_files": { "brief": "data/brief.txt" },
+      // "security_config": {},
+
+      // Which agent handles this task
+      "agent": "natural_language_query_generat"
+
+      // "tools": [],
+      // "human_input": false,
+      // "async_execution": false
+    }
+,
+    {
+      // Task identifier
+      "name": "validate_every_generated_training_task",
+
+      // What the task should accomplish
+      // Use {placeholder} inputs here; crewai run prompts for missing values
+      "description": "Validate every generated training example. For each example, verify that: 1. The selected tool exists in the provided tool definitions. 2. All required arguments are present. 3. No unsupported arguments are present. 4. Argument types are correct. 5. The natural-language query expresses exactly the same intent and values as the ground-truth arguments. 6. The example is not ambiguous. 7. The tool call is valid JSON. Reject any example that fails validation. For every valid example, format the result exactly as: <tool_call> {\"name\":\"TOOL_NAME\",\"arguments\":{...}} </tool_call> Return the final dataset in JSONL-compatible format using the Phi-3 conversations structure.",
+
+      // Clear definition of what the output should look like
+      "expected_output": "A validated JSONL dataset where every record contains a user message and an assistant message containing only a valid <tool_call>...</tool_call>.",
+
+      // Optional task guardrail(s) validate output before completion
+      // Use "guardrail" for one rule or "guardrails" for many
+      // Failed guardrails retry up to guardrail_max_retries times
+      // "guardrail": "Every factual claim needs context support.",
+      // "guardrails": [
+      //   "Every factual claim must be supported by context.",
+      //   "The answer must match the expected output format."
+      // ],
+      // "guardrail_max_retries": 2,
+
+      // Advanced task options:
+      // Docs: https://docs.crewai.com/concepts/tasks
+      // "type": "ConditionalTask",
+      // "condition": { "python": "my_project.conditions.should_run" },
+      // "output_json": { "python": "my_project.models.ReportOutput" },
+      // "output_pydantic": null,
+      // "response_model": null,
+      // "converter_cls": { "python": "my_project.converters.CustomConverter" },
+      // "markdown": false,
+      // "input_files": { "brief": "data/brief.txt" },
+      // "security_config": {},
+
+      // Which agent handles this task
+      "agent": "toolcall_dataset_validator",
+
+      // Task outputs used as context
+      "context": ["read_the_provided_tool_task", "read_the_tool_definitions_task"]
+
+      // "tools": [],
+      // "human_input": false,
+      // "async_execution": false
+    }
+
+  ],
+
+  // Execution process
+  // "sequential" — tasks run in order, each receiving prior task outputs
+  // "hierarchical" — a manager agent delegates tasks (requires manager_llm)
+  "process": "sequential",
+
+  // Enable verbose logging during execution
+  "verbose": true,
+
+  // Enable crew memory — persists context and learnings across tasks
+  "memory": false,
+
+  // Automatically plan the execution strategy before running tasks
+  // "planning": false,
+
+  // LLM for the planning step (used when planning is true)
+  // "planning_llm": "openai/gpt-4o",
+
+  // LLM for the manager agent (required when process is "hierarchical")
+  // "manager_llm": "openai/gpt-4o",
+
+  // Crew-level LLM fields also accept object form for custom endpoints
+  // "chat_llm": {"model": "llama3", "provider": "ollama", "base_url": "http://localhost:11434"},
+
+  // Advanced crew options:
+  // Docs: https://docs.crewai.com/concepts/crews
+  // For hierarchical crews, manager_agent can reference an agents/<name>.jsonc file
+  // that is not included in the "agents" list.
+  // "manager_agent": "toolcalling_dataset_scenario_",
+  // "before_kickoff_callbacks": [{"python": "my_project.callbacks.before_kickoff"}],
+  // "after_kickoff_callbacks": [{"python": "my_project.callbacks.after_kickoff"}],
+  // "function_calling_llm": "openai/gpt-4o-mini",
+  // "max_rpm": null,
+  // "cache": true,
+  // "knowledge_sources": [],
+  // "embedder": {},
+  // "output_log_file": "crew.log",
+  // "stream": false,
+  // "tracing": false,
+  // "security_config": {},
+
+  // Optional runtime input defaults.
+  // Use {placeholder} in agent or task text, for example:
+  // "description": "Research {topic} and write a brief"
+  // `crewai run` prompts for any placeholders missing from this object.
+  "inputs": {}
+}

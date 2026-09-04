@@ -1,0 +1,22 @@
+[
+  {
+    "name": "calculate_mortgage",
+    "description": "Calculate monthly mortgage payment.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "home_value": {
+          "type": "integer"
+        },
+        "down_payment": {
+          "type": "integer"
+        },
+        "interest_rate": {
+          "type": "number"
+        }
+      },
+      "required": ["home_value", "down_payment", "interest_rate"],
+      "additionalProperties": false
+    }
+  }
+]
